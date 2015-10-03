@@ -1,6 +1,7 @@
 __author__ = 'x1ang.li'
 
 import logging
+import os
 
 ### switches ###
 single_line_of_input = False
@@ -10,50 +11,60 @@ sort_output = True
 logging_level = logging.INFO
 ### end of switches ###
 
+### consts ###
+module_dir = os.path.dirname(__file__)
+
 def main():
-    set_a = set(read_input('list_a'))
-    set_b = set(read_input('list_b'))
+    group_a = proc_input(read_input('group_a'))
+    group_b = proc_input(read_input('group_b'))
+    logging.info('===========================')
 
-    # list_a intersect list_b
-    intersect = apply_operator(set_a, set_b, lambda a,b: (a & b))
-    logging.info('The strings that present in both lists are: %s', intersect)
+    # strings that present in both groups
+    intersect = proc_output(group_a & group_b)
+    write_output('The strings that present in both lists are: %s', intersect)
 
-    # list_a minus list_b
-    a_minus_b = apply_operator(set_a, set_b, lambda a,b: (a - b))
-    logging.info('The strings that only present in list_a are: %s', a_minus_b)
+    # strings that only present in group a
+    a_minus_b = proc_output(group_a - group_b)
+    write_output('The strings that only present in list_a are: %s', a_minus_b)
 
-    # list_a minus list_b
-    b_minus_a = apply_operator(set_a, set_b, lambda a,b: (b - a))
-    logging.info('The strings that only present in list_b are: %s', b_minus_a)
-
-
-def apply_operator(set_a, set_b, operator):
-    result = operator(set_a, set_b)
-    result = sorted(list(result)) if sort_output else result
-    return result
+    # strings that only present in group b
+    b_minus_a = proc_output(group_b - group_a)
+    write_output('The strings that only present in list_b are: %s', b_minus_a)
 
 
-def read_input(list_name):
-
-    file_name = list_name + ('_s' if single_line_of_input else '_m') + '.txt'
+def read_input(group_name):
+    file_name = os.path.join(module_dir, 'data', group_name + ('_s' if single_line_of_input else '_m') + '.txt')
     logging.info('Opening %s as the input', file_name)
 
     with open(file_name,'r') as f:
-        if (single_line_of_input):
-            input_list = f.readline().split()
+        if (single_line_of_input): #
+            # All the strings in this group are in a single line,
+            # and they could be separated by comma ',', semi-colon ';', tab'\t', space ' ',
+            # consecutive spaces are treated as a single one
+            input = f.readline().split()
         else: # multiple lines
-            input_list = f.readlines()
-            input_list = [s.rstrip('\n\r') for s in input_list]
+            # Need to take into consideration the line-break symbol specified by various OS
+            input = [s.rstrip('\n\r') for s in f.readlines()] # remove trailing line-breaks.
 
+    return input
+
+
+def proc_input(input):
     if (trim_items):
-        input_list = [s.strip() for s in input_list]
-
+        input = [s.strip() for s in input]
     if (ignore_empty_items):
-        input_list = filter(None, input_list)
+        input = filter(None, input)
+    logging.info('The first ten elements are: %s', input[:10])
+    return set(input)
 
-    logging.info('The first ten elements of %s are: %s', list_name, input_list[:10])
 
-    return input_list
+def proc_output(output):
+    return sorted(list(output)) if sort_output else output
+
+
+def write_output(desc, output):
+    # print(desc % output)
+    logging.info(desc, output)
 
 
 if __name__ == "__main__":
