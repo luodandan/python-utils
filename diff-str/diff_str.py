@@ -5,7 +5,7 @@ import logging
 ### switches ###
 single_line_of_input = False
 trim_items = False
-ingore_empty_items = False
+ignore_empty_items = False
 sort_output = True
 logging_level = logging.INFO
 ### end of switches ###
@@ -48,7 +48,7 @@ def read_input(list_name):
     if (trim_items):
         input_list = [s.strip() for s in input_list]
 
-    if (ingore_empty_items):
+    if (ignore_empty_items):
         input_list = filter(None, input_list)
 
     logging.info('The first ten elements of %s are: %s', list_name, input_list[:10])
