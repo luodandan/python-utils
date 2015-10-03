@@ -1,12 +1,32 @@
 # Created by .ignore support plugin
-# Modified by x1ang.li
+# Simplified by x1ang.li
+
+### Python ###
+## Byte-compiled / optimized / DLL files ##
+__pycache__/
+*.py[cod]
+*$py.class
+
+## Distribution / packaging ##
+.Python
+env/
+build/
+dist/
+downloads/
+lib/
+lib64/
+parts/
+sdist/
+var/
+.installed.cfg
+
+## PyBuilder ##
+target/
 
 
+### IDEs ###
 
-
-## IDEs ##
-
-### Eclipse ###
+## Eclipse ##
 *.pydevproject
 .metadata
 .gradle
@@ -21,41 +41,22 @@ local.properties
 .loadpath
 .project
 
-### JetBrains ###
+## JetBrains ##
 *.iml
 .idea/
 
-## Python
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
 
-# Distribution / packaging
-.Python
-env/
-build/
-dist/
-downloads/
-lib/
-lib64/
-parts/
-sdist/
-var/
-.installed.cfg
+### OS ###
 
-# PyBuilder
-target/
-
-
-
-### Windows
+## Windows ##
 Thumbs.db
 Desktop.ini
 
-### OSX
+## OSX ##
 .DS_Store
 .AppleDouble
 .LSOverride
 Icon
-._* # Thumbnails
+
+#Thumbnails
+._*
