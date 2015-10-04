@@ -4,11 +4,11 @@ import logging
 import os
 
 ### switches ###
-single_line_of_input = False
-trim_items = False
-ignore_empty_items = False
-sort_output = True
-logging_level = logging.INFO
+INPUT_SINGLE_LINE = False
+INPUT_TRIM = False
+INPUT_IGNORE_EMPTY = False
+OUTPUT_SORT = True
+LOGGING_LEVEL = logging.INFO
 ### end of switches ###
 
 ### consts ###
@@ -33,11 +33,11 @@ def main():
 
 
 def read_input(group_name):
-    file_name = os.path.join(module_dir, 'data', group_name + ('_s' if single_line_of_input else '_m') + '.txt')
+    file_name = os.path.join(module_dir, 'data', group_name + ('_s' if INPUT_SINGLE_LINE else '_m') + '.txt')
     logging.info('Opening %s as the input', file_name)
 
     with open(file_name,'r') as f:
-        if (single_line_of_input): #
+        if (INPUT_SINGLE_LINE): #
             # All the strings in this group are in a single line,
             # and they could be separated by comma ',', semi-colon ';', tab'\t', space ' ',
             # consecutive spaces are treated as a single one
@@ -50,16 +50,16 @@ def read_input(group_name):
 
 
 def proc_input(input):
-    if (trim_items):
+    if (INPUT_TRIM):
         input = [s.strip() for s in input]
-    if (ignore_empty_items):
+    if (INPUT_IGNORE_EMPTY):
         input = filter(None, input)
     logging.info('The first ten elements are: %s', input[:10])
     return set(input)
 
 
 def proc_output(output):
-    return sorted(list(output)) if sort_output else output
+    return sorted(list(output)) if OUTPUT_SORT else output
 
 
 def write_output(desc, output):
@@ -68,5 +68,5 @@ def write_output(desc, output):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging_level)
+    logging.basicConfig(level=LOGGING_LEVEL)
     main()
